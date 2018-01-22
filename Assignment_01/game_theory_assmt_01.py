@@ -1,81 +1,9 @@
 #!/usr/bin/python3
 
-import sys
-
-class Tile:
-
-    def __init__(self, content = None):
-        self.content = content
-
-    def __eq__(self, other):
-        return self.content == other.content
-
-    def __ne__(self, other):
-        return not self == other
-
-    def __str__(self):
-        if self.content == None:
-            return '\u25A1'
-        else:
-            return str(self.content)
-
-    def __bool__(self):
-        return not (self.content is None)
+from board import Board
 
 
-class Board:
-    def __init__(self, m, n):
 
-        self.m, self.n = m, n
-        self.tiles = []
-
-        for i in range(m):
-            self.tiles.append([])
-            for j in range(n):
-                self.tiles[i].append(Tile())
-
-    def __eq__(self, other):
-
-        if self.m != other.m or self.n != other.n:
-            return False
-        # compare them tile by tile
-        for i in range(self.m):
-            for j in range(self.n):
-                if self.tiles[i][j] != other.tiles[i][j]:
-                    return False
-        return True
-
-    @staticmethod
-    def copyBoard(board):
-
-        boardCopy = Board(board.m, board.n)
-
-        for i in range(boardCopy.m):
-
-            for j in range(boardCopy.n):
-
-                boardCopy.tiles[i][j] = board.tiles[i][j]
-
-        return boardCopy
-    def __isPlayable(self, i, j):
-
-        return i < self.m and j < self.n and not bool(self.tiles[i][j])
-
-    def playDomino(self, a, b, c):
-
-        m, n = self.m, self.n
-        a0, a1 = a[0], a[1]
-        b0, b1 = b[0], b[1]
-        tiles = self.tiles
-
-        # if index is out of range, or a tile is occupied
-        if self.__isPlayable(a0, a1) and self.__isPlayable(b0, b1):
-
-            self.tiles[a0][a1] = Tile(c)
-            self.tiles[b0][b1] = Tile(c)
-            return True
-
-        return False
 
 
 class Node:
@@ -197,4 +125,5 @@ def main(args):
     game.printGame()
 
 if __name__ == "__main__":
+    import sys
     main(sys.argv)
