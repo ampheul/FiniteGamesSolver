@@ -30,10 +30,9 @@ class Permutation:
     def pow(self, k):
 
         def power(i):
-
             for j in range(k):
-
                 i = self[i]
+            return i
 
         return Permutation( mapping= map(power, self.mapping),
                             nocopy = True)
@@ -56,6 +55,7 @@ class Permutation:
 
     @classmethod
     def identity(cls, n):
+
         return cls(mapping= range(n), nocopy=True)
 
 class Symmetry(Permutation):
@@ -88,7 +88,7 @@ class Symmetry(Permutation):
 
         return cls(mapping= range(n), nocopy=True, **kwargs)
 
-class SymmetryGroup:
+classj SymmetryGroup:
     '''A set of permutations
 
     intended to be used as a subgroup of S_n
@@ -135,30 +135,36 @@ class SymmetryGroup:
         for i in range(n):
             sMap += range(i*n,(i+1)*n)[::-1]
 
-        s = Symmetry(symbol= 's', mapping= sMap, nocopy= True)
+        s = Symmetry(symbol= 's', group = self, mapping= sMap, nocopy= True)
 
         rMap = []
 
         for i in range(n):
+
             for j in range(n):
+
                 # s.r is the composition of rotation and reflection
                 # it is equal to the transpose on an nxn board
                 # since s.r is the transpose, permute by s to get (s.s).r = r
+
                 srPermute = j*n + 1
                 rMap.append( s.permute(srPermute) )
 
-        r = Symmetry(mapping= srMap, nocopy= True)
+        r = Symmetry(mapping= rMap, nocopy= True)
         e = Symmetry.identity(symbol='')
 
         # calculate the following
         # automatically adds them to elements
-        (e,   r,   r.pow(2),   r.pow(3),
-        s, s*r, s*r.pow(2), s*r.pow(3))
+        {e,   r,   r.pow(2),   r.pow(3),
+        s, s*r, s*r.pow(2), s*r.pow(3)}
 
         for a in self.elements:
             for b in self.elements:
                 key = (a, b)
-                if key not in self.table:
+                try:
+                    self.elements[key]
+                except KeyError:
+
 
     # implement this one later
     # def z2xz2(self, m, n):

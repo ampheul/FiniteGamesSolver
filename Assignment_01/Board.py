@@ -7,12 +7,10 @@ class Tile:
 
 class Board:
 
-    def __init__(self, m, n, **kwargs):
+    def __init__(self, m, n, board=None, **kwargs):
 
         # tiles are in a 1-D array since this is faster and easier to slice with
-        if 'board' in kwargs:
-
-            board = kwargs['board']
+        if board is not None:
 
             self.m, self.n = board.m, board.n
             self.tiles = list(board.tiles)
