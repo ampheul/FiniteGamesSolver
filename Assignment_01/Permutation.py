@@ -1,3 +1,11 @@
+'''Permutation.py
+
+Contains classes that I want to use to check symmetry of boards in board.py
+
+In particular I build a class function in SymmetryGroup to generate D_8 and
+Z_2xZ_2, which are the symmetries of an mxn board.
+'''
+
 class Permutation:
     '''a bijection from the set of n elements to itself.
     contains a list of n distinct integers in the range 0 to n-1
@@ -22,7 +30,9 @@ class Permutation:
     def pow(self, k):
 
         def power(i):
+
             for j in range(k):
+
                 i = self[i]
 
         return Permutation( mapping= map(power, self.mapping),
@@ -33,15 +43,20 @@ class Permutation:
         return self.permute(i)
 
     def __mul__(self, other):
+
         return self.compose(other)
 
-    def __eq__(self, other):
+    def equals(self, other):
+
         return self.mapping == other.mapping
+
+    def __eq__(self, other):
+
+        return self.equals(other)
 
     @classmethod
     def identity(cls, n):
         return cls(mapping= range(n), nocopy=True)
-
 
 class Symmetry(Permutation):
 
@@ -50,17 +65,27 @@ class Symmetry(Permutation):
         self.symbol = symbol
         self.group = group
 
+        group.elements.add(self)
+
         super().__init__(**kwargs)
 
     def compose(self, other):
+
         return group.compose(self, other)
-    def __eq__(self, other):
+
+    def equals(self, other):
+
         try:
+
             return self.symbol == other.symbol
+
         except AttributeError:
-            return super().__eq__(self, other)
+
+            return self.mapping == other.mapping
+
     @classmethod
-    def identity(cls, n, mapping, nocopy, **kwarrgs):
+    def identity(cls, n, **kwargs):
+
         return cls(mapping= range(n), nocopy=True, **kwargs)
 
 class SymmetryGroup:
@@ -70,23 +95,35 @@ class SymmetryGroup:
     '''
     def __init__(self):
 
-        self.permutations = set()
+        self.elements = set()
         self.table = {}
 
     def compose(self, a, b):
         # search the pair in the table
         key = (a.symbol, b.symbol)
 
-        if key in self.table:
+        try
             return self.table[key]
-        else:
+
+        except KeyError
+
             permutation = Permutation.compose(a, b)
-            if permutation in self.permutations:
+
+            for sigma in self.elements:
+
+                if permutation.mapping == sigma.mapping:
+
+                    self.table[key] = sigma
+                    return sigma
+            else:
+                # just generate the new symmetry, and return it
                 self.table[key] = Symmetry(
-                                    mapping= permutation.compose(a, b).mapping,
+                                    mapping= permutation.mapping,
                                     nocopy= True,
                                     symbol= a.symbol + b.symbol,
                                     group= self)
+
+                return self.table[key]
 
     @classmethod
     def d8(cls, n):
@@ -94,6 +131,7 @@ class SymmetryGroup:
         self = cls()
         # s is the reflection across the vertical bisector of an nxn board
         sMap = []
+
         for i in range(n):
             sMap += range(i*n,(i+1)*n)[::-1]
 
@@ -109,16 +147,19 @@ class SymmetryGroup:
                 srPermute = j*n + 1
                 rMap.append( s.permute(srPermute) )
 
-        r = Permutation(mapping= srMap, nocopy= True)
+        r = Symmetry(mapping= srMap, nocopy= True)
+        e = Symmetry.identity(symbol='')
 
-        e = Symmetry.identity()
-        self.permutations = [
-            e,   r,   r.pow(2),   r.pow(3),
-            s, s*r, s*r.pow(2), s*r.pow(3)
-        ]
+        # calculate the following
+        # automatically adds them to elements
+        (e,   r,   r.pow(2),   r.pow(3),
+        s, s*r, s*r.pow(2), s*r.pow(3))
 
-        for a in self.permutations:
-            for b in self.permutations:
-                key =
+        for a in self.elements:
+            for b in self.elements:
+                key = (a, b)
+                if key not in self.table:
 
-    def z2xz2(self, m, n):
+    # implement this one later
+    # def z2xz2(self, m, n):
+        # return

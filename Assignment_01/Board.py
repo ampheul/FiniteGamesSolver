@@ -1,3 +1,5 @@
+
+
 class Tile:
     p = ('0', '1', '2')
     empty = '.'
@@ -66,4 +68,4 @@ class Board:
 
     def __getitem__(self, key):
 
-        return self.get(key[0], key[1])
+        return self.get(*key)
