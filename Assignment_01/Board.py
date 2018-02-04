@@ -1,69 +1,83 @@
+'''Board
 
-
-class Tile:
-    p = ('0', '1', '2')
-    empty = '.'
+    A class for simulating a board style data structure.
+    Intended for use in games.
+'''
 
 
 class Board:
-
-    def __init__(self, m, n, board=None, **kwargs):
+    class Tile:
+        empty = '.'
+    def __init__(self, m, n, tiles=None, **kwargs):
 
         # tiles are in a 1-D array since this is faster and easier to slice with
-        if board is not None:
 
-            self.m, self.n = board.m, board.n
-            self.tiles = list(board.tiles)
+        self.m, self.n = m, n
+
+        if tiles is None:
+
+            self.tiles = [ 0 for i in range(m) for j in range(n)]
 
         else:
 
-            self.m, self.n = m, n
-            self.tiles = []
+            self.tiles = tiles[:]
 
-            for i in range(m):
-                for j in range(n):
-                    self.tiles.append(Tile.empty)
+    def row(self, index):
+        '''returns a row in the board indexed 0 to m-1
+        '''
+        return self.tiles[index*n:(index+1)*n]
 
-    @classmethod
-    def copy(cls, board):
-        return cls(board=board)
+    def rows(self):
+        '''rows
+        returns a generator expression for the rows
+        '''
+        m, n = self.m, self.n
+
+        return (self.tiles[i*n: (i+1)*n] for i in range(m) )
 
     def get(self, x, y):
         '''get
-        returns the element in tiles if the position is valid.
+        returns the element in self.tiles if the position is valid.
         otherwise returns None
         '''
         if x >= 0 and x < self.m and y >=0 and y < self.n:
+
             return self.tiles[ x*self.n + y ]
+
         else:
+
             return None
-
-    def row(self, index):
-        '''returns a row in the board
-        '''
-        if index >= 0 and index < self.m
-            return self.tiles[index*n:(index*n]
-        else:
-            return None
-
-    def playDomino(self, domino, player):
-
-        m, n = self.m, self.n
-
-        x1, y1, x2, y2 = domino
-
-        a = self.get(x1, y1)
-        b = self.get(x2, y2)
-
-        # if index is out of range, or a tile is occupied
-        if a is Tile.empty and b is Tile.empty:
-
-            self.tiles[a0][a1] = Tile.p[0]
-            self.set() = Tile.p[0]
-            return True
-
-        return False
 
     def __getitem__(self, key):
-
+        '''takes a key of tuple(int, int) type indexing a row and column of the
+        board
+        '''
         return self.get(*key)
+
+    def __hash__(self):
+
+        try:
+
+            return self.hash
+
+        except AttributeError:
+
+            self.hash = hash(self.tiles)
+
+            return self.hash
+
+class PlayableBoard():
+
+    pass
+
+if __name__ == "__main__":
+
+    def print_board(board):
+
+        for row in board.rows():
+
+            print(''.join(['x' if i == 0 else 'o' for i in row]))
+            print(board[1,2])
+
+    board = Board(4, 5)
+    print_board(board)

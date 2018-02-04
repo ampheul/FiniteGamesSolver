@@ -10,7 +10,7 @@ class Node:
         try:
 
             m, n = parent.board.m, parent.board.n
-            self.board = Board.copyBoard(parent.board)
+            self.board = Board(board= parent.board)
             self.player = 2 if parent.player ==  1 else 1
 
         except AttributeError:

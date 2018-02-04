@@ -9,14 +9,11 @@ Z_2xZ_2, which are the symmetries of an mxn board.
 class Permutation:
     '''a bijection from the set of n elements to itself.
     contains a list of n distinct integers in the range 0 to n-1
-    permute() takes an element i and returns map[i]
+    permute() takes an element i and returns mapping[i]
     '''
-    def __init__(self, mapping, nocopy=False, **kwargs):
+    def __init__(self, mapping, **kwargs):
 
-        if nocopy:
-            self.mapping = kwargs['mapping']
-        else:
-            self.mapping = list(kwargs['mapping'])
+        self.mapping = tuple(mapping)
 
     def permute(self, i):
 
@@ -24,22 +21,22 @@ class Permutation:
 
     def compose(self, other):
 
-        return Permutation( mapping= map(self.permute, other.mapping),
-                            nocopy= True)
+        return Permutation(
+            # tuple from list comprehension is the fastest in python 3.6
+            mapping= tuple([self.mapping[i] for i in other.mapping]) )
 
     def pow(self, k):
 
         def power(i):
             for j in range(k):
-                i = self[i]
+                i = self.mapping[i]
             return i
 
-        return Permutation( mapping= map(power, self.mapping),
-                            nocopy = True)
+        return Permutation( mapping= tuple([power(i) for i in self.mapping]) )
 
     def __getitem__(self, index):
 
-        return self.permute(i)
+        return self.mapping[i]
 
     def __mul__(self, other):
 
@@ -53,117 +50,94 @@ class Permutation:
 
         return self.equals(other)
 
+    def __hash__(self):
+
+        '''hash
+
+            returns the saved hash value
+            sets it if it is unset'''
+
+        try:
+
+            return self.__hash
+
+        except AttributeError:
+
+            # mapping is a tuple, hash it
+            self.hash = hash(self.mapping)
+
+            return self.__hash
+
     @classmethod
     def identity(cls, n):
 
-        return cls(mapping= range(n), nocopy=True)
+        return cls(mapping= range(n))
 
 class Symmetry(Permutation):
 
-    def __init__(self, symbol, group, **kwargs):
+    def __init__(self, group, **kwargs):
 
-        self.symbol = symbol
+        super().__init__(**kwargs)
+
         self.group = group
 
         group.elements.add(self)
 
-        super().__init__(**kwargs)
+
 
     def compose(self, other):
 
-        return group.compose(self, other)
-
-    def equals(self, other):
+        key = (a, b)
 
         try:
 
-            return self.symbol == other.symbol
+            return group.table[key]
 
-        except AttributeError:
+        except KeyError:
 
-            return self.mapping == other.mapping
+            group.table[key] = Symmetry(
+                mapping= tuple([self.mapping[i] for i in other.mapping]),
+                group = self.group )
 
-    @classmethod
-    def identity(cls, n, **kwargs):
 
-        return cls(mapping= range(n), nocopy=True, **kwargs)
+    def equals(self, other):
 
-classj SymmetryGroup:
+        return hash(self) == hash(other)
+
+class SymmetryGroup:
     '''A set of permutations
 
     intended to be used as a subgroup of S_n
+
+    Symmetry equality relies on hashes, which looks wack, but its faster.
+    which is the intent.
     '''
     def __init__(self):
 
         self.elements = set()
         self.table = {}
 
-    def compose(self, a, b):
-        # search the pair in the table
-        key = (a.symbol, b.symbol)
-
-        try
-            return self.table[key]
-
-        except KeyError
-
-            permutation = Permutation.compose(a, b)
-
-            for sigma in self.elements:
-
-                if permutation.mapping == sigma.mapping:
-
-                    self.table[key] = sigma
-                    return sigma
-            else:
-                # just generate the new symmetry, and return it
-                self.table[key] = Symmetry(
-                                    mapping= permutation.mapping,
-                                    nocopy= True,
-                                    symbol= a.symbol + b.symbol,
-                                    group= self)
-
-                return self.table[key]
-
     @classmethod
     def d8(cls, n):
 
         self = cls()
         # s is the reflection across the vertical bisector of an nxn board
-        sMap = []
-
-        for i in range(n):
-            sMap += range(i*n,(i+1)*n)[::-1]
-
-        s = Symmetry(symbol= 's', group = self, mapping= sMap, nocopy= True)
-
-        rMap = []
-
-        for i in range(n):
-
-            for j in range(n):
-
-                # s.r is the composition of rotation and reflection
-                # it is equal to the transpose on an nxn board
-                # since s.r is the transpose, permute by s to get (s.s).r = r
-
-                srPermute = j*n + 1
-                rMap.append( s.permute(srPermute) )
-
-        r = Symmetry(mapping= rMap, nocopy= True)
-        e = Symmetry.identity(symbol='')
+        s = Symmetry(
+                mapping= tuple([m*i+j for i in range(n) for j in range(n)[::-1]]),
+                group= self )
+        # s.r is the composition of rotation and reflection
+        # s.r is equal to the transpose on an nxn board
+        # since s.r is the transpose, permute by s to get (s.s).r = r
+        r = Symmetry(
+                mapping= tuple([ s[n*j+i] for i in range(n) for j in range(n) ]),
+                group=self)
+        e = Symmetry.identity(n*n)
 
         # calculate the following
         # automatically adds them to elements
-        {e,   r,   r.pow(2),   r.pow(3),
-        s, s*r, s*r.pow(2), s*r.pow(3)}
+        (e,   r,   r.pow(2),   r.pow(3),
+        s, s*r, s*r.pow(2), s*r.pow(3))
 
-        for a in self.elements:
-            for b in self.elements:
-                key = (a, b)
-                try:
-                    self.elements[key]
-                except KeyError:
 
 
     # implement this one later
