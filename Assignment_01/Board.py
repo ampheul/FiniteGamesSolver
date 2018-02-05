@@ -8,24 +8,17 @@
 class Board:
     class Tile:
         empty = '.'
-    def __init__(self, m, n, tiles=None, **kwargs):
+    def __init__(self, m, n, tiles=(), **kwargs):
 
         # tiles are in a 1-D array since this is faster and easier to slice with
 
         self.m, self.n = m, n
-
-        if tiles is None:
-
-            self.tiles = [ 0 for i in range(m) for j in range(n)]
-
-        else:
-
-            self.tiles = tiles[:]
+        self._tiles = tuple(tiles)
 
     def row(self, index):
         '''returns a row in the board indexed 0 to m-1
         '''
-        return self.tiles[index*n:(index+1)*n]
+        return self._tiles[index*n:(index+1)*n]
 
     def rows(self):
         '''rows
@@ -33,16 +26,16 @@ class Board:
         '''
         m, n = self.m, self.n
 
-        return (self.tiles[i*n: (i+1)*n] for i in range(m) )
+        return (self._tiles[i*n: (i+1)*n] for i in range(m) )
 
     def get(self, x, y):
         '''get
-        returns the element in self.tiles if the position is valid.
+        returns the element in self._tiles if the position is valid.
         otherwise returns None
         '''
         if x >= 0 and x < self.m and y >=0 and y < self.n:
 
-            return self.tiles[ x*self.n + y ]
+            return self._tiles[ x*self.m + y ]
 
         else:
 
@@ -62,13 +55,10 @@ class Board:
 
         except AttributeError:
 
-            self.hash = hash(self.tiles)
+            self.hash = hash(self._tiles)
 
             return self.hash
 
-class PlayableBoard():
-
-    pass
 
 if __name__ == "__main__":
 
@@ -77,7 +67,8 @@ if __name__ == "__main__":
         for row in board.rows():
 
             print(''.join(['x' if i == 0 else 'o' for i in row]))
-            print(board[1,2])
 
-    board = Board(4, 5)
+        print(board[1,2])
+
+    board = Board(4, 5, tiles= tuple(i % 2 for i in range(4*5)))
     print_board(board)
