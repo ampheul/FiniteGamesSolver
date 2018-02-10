@@ -13,12 +13,35 @@ class Board:
         # tiles are in a 1-D array since this is faster and easier to slice with
 
         self.m, self.n = m, n
-        self._tiles = tuple(tiles)
+        self.tiles = tiles
+
+    '''properties.
+    these will make overriding functionality easier
+    '''
+    @property
+    def m(self):
+        return self.__m
+    @m.setter
+    def m(self, val):
+        self.__m = val
+    @property
+    def n(self):
+        return self.__n
+    @n.setter
+    def n(self, val):
+        self.__n = val
+    @property
+    def tiles(self):
+        return __tiles
+
+    @tiles.setter
+    def tiles(self, val):
+        self.__tiles = tuple(val)
 
     def row(self, index):
         '''returns a row in the board indexed 0 to m-1
         '''
-        return self._tiles[index*n:(index+1)*n]
+        return self.tiles[index*n:(index+1)*n]
 
     def rows(self):
         '''rows
@@ -26,16 +49,16 @@ class Board:
         '''
         m, n = self.m, self.n
 
-        return (self._tiles[i*n: (i+1)*n] for i in range(m) )
+        return (self.tiles[i*n: (i+1)*n] for i in range(m) )
 
     def get(self, x, y):
         '''get
-        returns the element in self._tiles if the position is valid.
+        returns the element in self.__tiles if the position is valid.
         otherwise returns None
         '''
         if x >= 0 and x < self.m and y >=0 and y < self.n:
 
-            return self._tiles[ x*self.m + y ]
+            return self.tiles[ x*self.m + y ]
 
         else:
 
@@ -55,9 +78,10 @@ class Board:
 
         except AttributeError:
 
-            self.hash = hash(self._tiles)
+            self.hash = hash(self.tiles)
 
             return self.hash
+
 
 
 if __name__ == "__main__":

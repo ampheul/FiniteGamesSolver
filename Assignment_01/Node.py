@@ -25,7 +25,7 @@ class Dominoes(GameBoard):
                 if (i,j) not in self.plays and
 
 
-class Node(GameBoard):
+class Node:
     def __init__(self, parent = None, game = None, **kwargs):
 
         self.parent = parent

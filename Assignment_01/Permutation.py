@@ -118,8 +118,8 @@ class Symmetry(Permutation):
 
     def equals(self, other):
 
-        return hash(self) == hash(other)
 
+        return hash(self) == hash(other)
     @classmethod
     def identity(cls, n, *arr, group, **kwargs):
 
