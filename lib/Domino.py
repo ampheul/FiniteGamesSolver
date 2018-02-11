@@ -28,8 +28,6 @@ class Domino(Game):
         '''
         return self.__state
 
-    @state.setter(self):
-    def state(self):
 
 
 

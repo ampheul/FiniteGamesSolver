@@ -9,11 +9,21 @@ Z_2xZ_2, which are the symmetries of an mxn board.
 class Permutation:
     '''a bijection from the set of n elements to itself.
     contains a list of n distinct integers in the range 0 to n-1
-    permute() takes an element i and returns mapping[i]
+    permute() takes an element i and returns self.mapping[i]
+
+    instances of Permutation are hashable
+
+    permutations are callable, so you can just write sigma(n) instead of
+    sigma.permute(n)
+
+    Permutation is also powerable using ** notation. I use a fast powering
+    algorithm, so for integers greater than 3 or 4, it should be very fast.
+    It also supports an inverse operation.
     '''
     def __init__(self, mapping, *arr, **kwargs):
 
-        self.mapping = tuple(mapping)
+        self.__mapping = tuple(mapping)
+        self.__n = len(mapping)
 
     def permute(self, i):
 
@@ -26,21 +36,36 @@ class Permutation:
             mapping= tuple([self.mapping[i] for i in other.mapping]) )
 
     def pow(self, k):
+        '''fast power algorithm for powers of itself
+        '''
+        if k < 0: return self.inverse().pow(-k)
 
-        def power(i):
-            for j in range(k):
-                i = self.mapping[i]
-            return i
+        product = self.identity(len(self))
 
+        if k == 0: return product
+
+        powered = self
+        while k > 0:
+            if k % 2 == 1:
+                product = product * powered
+            k  = k >> 1
+            if k > 0:
+                powered = powered * powered
+
+        return product
+
+    def inverse(self):
+        '''returns the inverse permutation to self
+        '''
         return Permutation(
-            mapping= tuple([ power(i) for i in self.mapping]) )
+                mapping=tuple( [ y for x,y in
+                                    list(enumerate(self.mapping)).sort() ] )
 
-    def __xor__(self, other):
+    def __pow__(self, k):
 
-        # other is a number
-        return self.pow(other)
+        return self.pow(k)
 
-    def __getitem__(self, index):
+    def __call__(self, index):
 
         return self.permute(index)
 
@@ -56,13 +81,14 @@ class Permutation:
 
         return self.equals(other)
 
+    def __len__(self):
+
+        return len(self.__mapping)
+
     def __hash__(self):
-
-        '''hash
-
-            returns the saved hash value
-            sets it if it is unset'''
-
+        '''returns the saved hash value
+        sets it if it is unset
+        '''
         try:
 
             return self.__hash
@@ -75,9 +101,9 @@ class Permutation:
             return self.__hash
 
     @classmethod
-    def identity(cls, n, **kwargs):
+    def identity(cls, n, *arr, **kwargs):
 
-        return cls(mapping= range(n), **kwargs)
+        return cls(mapping= tuple(range(n)), *arr, **kwargs)
 
     def __str__(self):
 
@@ -113,18 +139,19 @@ class Symmetry(Permutation):
 
             group.table[key] = Symmetry(
                 mapping= tuple([self.mapping[i] for i in other.mapping]),
-                group = group )
-
+                group= group )
 
     def equals(self, other):
 
-
         return hash(self) == hash(other)
+
     @classmethod
     def identity(cls, n, *arr, group, **kwargs):
 
-        e = super().identity(n, group= group)
+        e = super().identity(n, *arr, **kwargs)
 
+        e.group = group
+        group.identity = e
         group.elements.add(e)
 
         return e
@@ -152,14 +179,16 @@ class SymmetryGroup:
 
         # s is the reflection across the vertical bisector of an nxn board
         s = Symmetry(
-                mapping= tuple([ m*i+j for i in range(n) for j in range(n)[::-1] ]),
+                mapping= tuple([ m*i+j for i in range(n)
+                                            for j in range(n)[::-1] ]),
                 group= self )
 
         # s.r is the composition of rotation and reflection
         # s.r is equal to the transpose on an nxn board
         # since s.r is the transpose, permute by s to get (s.s).r = r
         r = Symmetry(
-                mapping= tuple([ s[n*j+i] for i in range(n) for j in range(n) ]),
+                mapping= tuple([ s(n*j+i) for i in range(n)
+                                                for j in range(n) ]),
                 group= self )
 
         e = Symmetry.identity(n*n, self)
@@ -190,6 +219,7 @@ class SymmetryGroup:
             group = self )
 
         # group identity
+        # automatically added as the groups identity
         e = Symmetry.identity(m*n, group= self)
 
         (e, s_h, s_v, s_h*s_v)
@@ -200,6 +230,15 @@ class SymmetryGroup:
 
         return  'Group elements:\n{0}\nGroup Table:\n{1}'.format(
                     self.elements, self.table )
+    @property
+    def identity():
+
+        return self.__identity
+
+    @identity.setter
+    def identity(self, value):
+
+        self.__identity = value
 
 if __name__ == '__main__':
 

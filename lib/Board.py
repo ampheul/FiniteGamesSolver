@@ -6,6 +6,8 @@
 
 
 class Board:
+    '''A hashable board class.
+    '''
     class Tile:
         empty = '.'
     def __init__(self, m, n, tiles=(), **kwargs):
@@ -21,22 +23,12 @@ class Board:
     @property
     def m(self):
         return self.__m
-    @m.setter
-    def m(self, val):
-        self.__m = val
     @property
     def n(self):
         return self.__n
-    @n.setter
-    def n(self, val):
-        self.__n = val
     @property
     def tiles(self):
         return __tiles
-
-    @tiles.setter
-    def tiles(self, val):
-        self.__tiles = tuple(val)
 
     def row(self, index):
         '''returns a row in the board indexed 0 to m-1

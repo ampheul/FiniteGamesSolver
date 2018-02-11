@@ -1,43 +1,96 @@
-from Board import *
+#!/usr/bin/python3
+
+import sys
+
+class Tile:
+
+    def __init__(self, content = None):
+        self.content = content
+
+    def __eq__(self, other):
+        return self.content == other.content
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __str__(self):
+        if self.content == None:
+            return '\u25A1'
+        else:
+            return str(self.content)
+
+    def __bool__(self):
+        return not (self.content is None)
 
 
-class Dominoes(GameBoard):
+class Board:
+    def __init__(self, m, n):
 
-    '''This is a board to be played with abstract games
-    '''
-    def __init__(self, *arr, **kwargs):
+        self.m, self.n = m, n
+        self.tiles = []
 
-        super().__init__(self, *arr, **kwargs)
+        for i in range(m):
+            self.tiles.append([])
+            for j in range(n):
+                self.tiles[i].append(Tile())
 
-        if self.parent is not None:
+    def __eq__(self, other):
 
-
-
-    def options():
-        ''' iterate over the options for the game
-        '''
-        # set generator for the set of filled tiles
-
+        if self.m != other.m or self.n != other.n:
+            return False
+        # compare them tile by tile
         for i in range(self.m):
-
             for j in range(self.n):
+                if self.tiles[i][j] != other.tiles[i][j]:
+                    return False
+        return True
 
-                if (i,j) not in self.plays and
+    @staticmethod
+    def copyBoard(board):
+
+        boardCopy = Board(board.m, board.n)
+
+        for i in range(boardCopy.m):
+
+            for j in range(boardCopy.n):
+
+                boardCopy.tiles[i][j] = board.tiles[i][j]
+
+        return boardCopy
+    def __isPlayable(self, i, j):
+
+        return i < self.m and j < self.n and not bool(self.tiles[i][j])
+
+    def playDomino(self, a, b, c):
+
+        m, n = self.m, self.n
+        a0, a1 = a[0], a[1]
+        b0, b1 = b[0], b[1]
+        tiles = self.tiles
+
+        # if index is out of range, or a tile is occupied
+        if self.__isPlayable(a0, a1) and self.__isPlayable(b0, b1):
+
+            self.tiles[a0][a1] = Tile(c)
+            self.tiles[b0][b1] = Tile(c)
+            return True
+
+        return False
 
 
 class Node:
-    def __init__(self, parent = None, game = None, **kwargs):
+    def __init__(self, parent = None, game = None):
 
         self.parent = parent
         self.game = game
 
-        try:
+        if not parent is None:
 
             m, n = parent.board.m, parent.board.n
-            self.board = Board(board= parent.board)
+            self.board = Board.copyBoard(parent.board)
             self.player = 2 if parent.player ==  1 else 1
 
-        except AttributeError:
+        else:
 
             m, n = game.m, game.n
             self.board = Board(m, n)
@@ -65,6 +118,7 @@ class Node:
                     self.children.append(child)
                     child.populate()
                     child = Node(self, self.game)
+
 
                 if child.board.playDomino((i, j), (i, j+1), domino):
 
@@ -123,3 +177,24 @@ class Node:
             self.__nlines = m if m > sum else sum
 
         return self.__nlines
+
+
+class Game:
+
+    def __init__(self, m, n):
+
+        self.m, self.n = m, n
+
+        self.root = Node(None, self)
+        self.root.populate()
+
+
+    def printGame(self):
+        self.root.printNode()
+
+def main(args):
+    game = Game(int(args[1]), int(args[2]))
+    game.printGame()
+
+if __name__ == "__main__":
+    main(sys.argv)
