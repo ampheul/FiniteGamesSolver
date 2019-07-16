@@ -1,9 +1,10 @@
 # Game theory stuff
 
-Here is a repository for some programs I made for my game theory class.
+Here is a repository which solves finite games as discussed in an undegrad course.
 
-For the first assignment I made a program that prints out the game tree for the domino game.
+We solve 3 games. The solutions are provided as the output as knight.py, domino.py, and ttttg.py
 
-For the second assignment, I made a program which calculates nim values of the tic-tac-toe-type game.
+## The Knight game:
+Players take turns moving a knight on an n:times:n chessboard.
 
 `/lib` contains a bunch of files which I intend to use in future projects.

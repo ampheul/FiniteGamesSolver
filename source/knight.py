@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 '''
-Takes a single command line argument n and prints the knight game on an
 nxn board. Players must move the knight so that the sum of coordinates
 decreases (described with matrix coordinates). 
 
 The player who can not move loses.
 
-This is clearly an impartial game with normal play 
-therefore we can calcluate nim equivalency and print it out
+This is an impartial game with normal play 
+therefore we can calcluate nim equivalency and print it out,
+precisely what this program does.
 
-... so we do that.
+Takes a single command line argument n and prints the knight game on an
 '''
 class Tiles:
     '''Creates an nxn tile grid
@@ -51,34 +51,27 @@ if __name__ == '__main__':
 
     tiles = Tiles(n)
 
-    def horsy_options(i, j):
+    def knight_options(i, j):
         '''Get the options that a horse can move to starting from (i,j)
         Those are the values which have x+y strictly less than i+j
         '''
-        if tiles.inTiles(i-2, j-1): 
+
+        # possible knight moves
+        knight_moves = [(-2,-1),(-2,1),(-1,-2),(1,-2)]
         
-            yield tiles[i-2, j-1]
-        
-        if tiles.inTiles(i-2, j+1):
+        # only yield moves within bounds
+        for x,y in knight_moves:
             
-            yield tiles[i-2, j+1]
-        
-        if tiles.inTiles(i-1, j-2):
-            
-            yield tiles[i-1, j-2]
-        
-        if tiles.inTiles(i+1, j-2):
-            
-            yield tiles[i+1, j-2]
-        
-        raise StopIteration
+            if tiles.inTiles(i+x,j+y):
+
+                yield tiles[i+x,j+y]
     
     def setTile(x,y):
         
         if not tiles.inTiles(x,y):
             return 
         
-        options = {option for option in horsy_options(x,y)}
+        options = set(knight_options(x,y))
         print(str(options)+' tile: %d,%d' % (x, y))
         options = list(options)
         options.sort()
@@ -95,15 +88,16 @@ if __name__ == '__main__':
         tiles[x,y] = mex if mexFound else len(options)
         print('mex: %d, len: %d, tiles[%d,%d]: %d'% (mex, len(options), x, y, tiles[x,y]))
     
-    # iterate along the diagonal and play horsy
-    # since the invariant of the diagonal sum must decrease in horsy,
+    # iterate along the diagonal and play the knight game
+    # since the invariant of the diagonal sum must decrease in the knight game,
     # we can discover all moves in proper order, ensuring subgames are already evaluated
     for i in range(2*(n-1)+1):
          for j in range(i+1):
             if tiles.inTiles(i-j,j):
                 setTile(i-j,j)
 
-    symbols = ['.\u25A1','.\u25A5', '.\u25A6', '.\u25A3', '.\u25A0']
+    #symbols = ['.\u25A1','.\u25A5', '.\u25A6', '.\u25A3', '.\u25A0']
+    symbols = ['.'+str(i) for i in range(5)]
     for i in range(n):
         print( ''.join([ symbols[i] for i in tiles.tiles[n*i:n*(i+1)] ]) )
 
