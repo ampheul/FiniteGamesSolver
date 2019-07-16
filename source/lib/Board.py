@@ -79,7 +79,7 @@ class Board:
 if __name__ == "__main__":
 
     def print_board(board):
-
+        
         for row in board.rows():
 
             print(''.join(['x' if i == 0 else 'o' for i in row]))

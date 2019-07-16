@@ -1,5 +1,11 @@
 #!/usr/bin/python3
+'''
+This script prints out the tree view of the domino game.
 
+The domino game is simple. On a recangular board of dimensions n x m
+players take turns 
+
+'''
 import sys
 
 class Tile:
