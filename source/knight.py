@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 '''
-nxn board. Players must move the knight so that the sum of coordinates
-decreases (described with matrix coordinates). 
-
+knight.py
+=========
+A knight moves on an nxn board. 
+Players take turn moving the knight.
+All knight moves must be towards the top left of the board.
 The player who can not move loses.
 
 This is an impartial game with normal play 
@@ -52,14 +54,21 @@ if __name__ == '__main__':
     tiles = Tiles(n)
 
     def knight_options(i, j):
-        '''Get the options that a horse can move to starting from (i,j)
-        Those are the values which have x+y strictly less than i+j
+        '''
+        knight_options
+        ==============
+        iterate over the knight's potential moves and return only the legal moves.
+
+        Parameters
+        ----------
+        i : int
+        j : int
+
         '''
 
         # possible knight moves
         knight_moves = [(-2,-1),(-2,1),(-1,-2),(1,-2)]
-        
-        # only yield moves within bounds
+    
         for x,y in knight_moves:
             
             if tiles.inTiles(i+x,j+y):

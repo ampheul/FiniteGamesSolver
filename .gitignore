@@ -4,3 +4,5 @@ make.bat
 .mypy_cache
 build
 */.mypy_cache
+*/__pycache__
+docs/_build

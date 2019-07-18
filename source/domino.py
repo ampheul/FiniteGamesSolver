@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 '''
+domino.py
+========================================
 This script prints out the tree view of the domino game.
 
 The domino game is simple. On a recangular board of dimensions n x m
