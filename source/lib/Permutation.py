@@ -112,8 +112,8 @@ if __name__ == '__main__':
 
     import sys
 
-    a = Permutation(mapping = [1,0,2,5,4,3,8,6,7,9])#type: Permutation
-    b = Permutation(mapping = [1,0,2,5,4,3,8,6,9,7])#type: Permutation
+    a = Permutation(mapping = [1,0,2,5,4,3,8,6,7,9]) #type: Permutation
+    b = Permutation(mapping = [1,0,2,5,4,3,8,6,9,7]) #type: Permutation
     print((a*b*b*b)**2)
     c = {
         a : "asdf",

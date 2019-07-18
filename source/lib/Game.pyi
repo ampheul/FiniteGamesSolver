@@ -27,11 +27,24 @@ class NormalPlay(Game):
     '''
     pass
 
+class Nim(NormalPlay):
+    '''
+    Nim
+    ===
+    The type of game that has a nim equivalence.
+    '''
+    def nim_options(self) -> Generator[int, None, None]:
+        for option in self.options():
+            yield option.nim_value()
+
+    @property()
+    def nim_value(self) -> int:
+        ...
 
 toggle = {
-        Player.one : Player.two,
-        Player.two : Player.one
-    } # Dict[Player, Player]
+    Player.one : Player.two,
+    Player.two : Player.one
+} # Dict[Player, Player]
 
 
 def zermelo(game : NormalPlay, player : Player) -> Player:
