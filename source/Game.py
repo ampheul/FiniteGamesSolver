@@ -1,5 +1,6 @@
 from enum import Enum
-from typing import Type, TypeVar, Optional, Dict, List
+from typing import Type, TypeVar, Generator, Iterable, Dict, List
+from typing_extensions import Protocol
 
 
 class Player(Enum):
@@ -7,7 +8,7 @@ class Player(Enum):
     two = 2
 T = TypeVar('T')
 
-class Game:
+class Game(Protocol):
     '''
     Game
     ====
@@ -15,7 +16,7 @@ class Game:
     Generates a values for the game using zermelos algorithm.
     '''
 
-    def options(self: T) -> Generator[T, None, None]:
+    def options(self: T) -> Iterable[T]:
         ...
 
 
@@ -33,13 +34,24 @@ class Nim(NormalPlay):
     ===
     The type of game that has a nim equivalence.
     '''
-    def nim_options(self) -> Generator[int, None, None]:
-        for option in self.options():
-            yield option.nim_value()
-
-    @property()
     def nim_value(self) -> int:
         ...
+mex(values : Iterable[int]) -> int:
+
+    unique_values = sorted(set(values))
+
+    for i, value in enumerate(unique_values):
+        if value != i:
+            return i
+    return len(unique_values)
+        
+
+
+
+nim_sum = functools.partial(functools.reduce, operator.xor)
+
+determine_nim(game : Nim):
+
 
 toggle = {
     Player.one : Player.two,

@@ -13,6 +13,20 @@ precisely what this program does.
 
 Takes a single command line argument n and prints the knight game on an
 '''
+
+import .Game
+
+class KnightGame(Nim):
+    state : Tuple[int, int]
+    
+    def __init__(self, state : Tuple[int, int]):
+        self.state = state
+    
+    def options(self):
+        return 
+
+print(KnightGame().options() + 1)
+
 class Tiles:
     '''Creates an nxn tile grid
     '''
@@ -53,7 +67,7 @@ if __name__ == '__main__':
 
     tiles = Tiles(n)
 
-    def knight_options(i, j):
+    def knight_options(i : int, j : int):
         '''
         knight_options
         ==============
@@ -64,6 +78,7 @@ if __name__ == '__main__':
         i : int
         j : int
 
+        Return
         '''
 
         # possible knight moves
