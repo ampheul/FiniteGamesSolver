@@ -9,10 +9,10 @@ The Knight game:
 ----------------
 
 Players take turns moving a knight on an nxn chessboard.
-Valid knight moves move the knight towards the top left corner.
-The player who cannot play loses (when the knight has moved to the top right).
+Valid knight moves are squares which bring the knight closer to the top left corner
+The player who cannot play loses.
 This is an impartial game with normal play and so we can calculate a nim
-equivalency for each tile. This program prints
+equivalency for each square. This program prints
 an ascii version of the board with each tile colored based on its nim
 equivalency.
 
