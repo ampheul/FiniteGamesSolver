@@ -19,7 +19,11 @@ equivalency.
 The Domino game
 ---------------
 
-Given an nxm grid, players take turns placing 2x1 dominoes. The player
-cannot place a domino
+Given an nxm grid, players take turns placing 2x1 dominoes. The player who
+cannot place a domino loses. print out the
+
+.. note::
+    
+    It is easy to generate very large graphs with domino.py, it is recommended that you do not use numbers greater than 5.
 
 As discussed in MATH 3157B at Western University during spring 2018
