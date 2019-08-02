@@ -2,6 +2,6 @@ Symmetry module
 ===============
 
 .. automodule:: Symmetry
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:

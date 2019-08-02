@@ -1,9 +1,11 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>ttttg module &#8212; Finite Games Solver  documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -49,13 +51,13 @@ determine the value of TTTTG_100. Proof by algorithm. Whoopee.</p>
 computer nim equivalency for.</p>
 <dl class="function">
 <dt id="ttttg.mex">
-<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">mex</code><span class="sig-paren">(</span><em class="sig-param">nim_value_set</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.mex" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ttttg.</code><code class="descname">mex</code><span class="sig-paren">(</span><em>nim_value_set</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.mex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the minimal excludant from a set of nim values</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ttttg.nim">
-<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">nim</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.nim" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ttttg.</code><code class="descname">nim</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.nim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the nim value for ttttg_n
 ttttg_values is the array of nim values for games of 1xn
 where n is the index where the value is stored</p>
@@ -63,20 +65,20 @@ where n is the index where the value is stored</p>
 
 <dl class="function">
 <dt id="ttttg.nim_options">
-<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">nim_options</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.nim_options" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ttttg.</code><code class="descname">nim_options</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.nim_options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate all the options for ttttg_n in terms of nim equivalence
 return them as a set</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ttttg.nim_sum">
-<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">nim_sum</code><span class="sig-paren">(</span><em class="sig-param">nim_values_iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.nim_sum" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ttttg.</code><code class="descname">nim_sum</code><span class="sig-paren">(</span><em>nim_values_iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.nim_sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>takes an iterable of nim values and returns the xor of all the elements</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ttttg.options">
-<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">options</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.options" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ttttg.</code><code class="descname">options</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.options" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns a set of tuples.
 each tuple sums to a subgame of ttttg_n
 each element of a tuple is an integer i which represents ttttg_i</p>
@@ -84,7 +86,7 @@ each element of a tuple is an integer i which represents ttttg_i</p>
 
 <dl class="function">
 <dt id="ttttg.winning_move">
-<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">winning_move</code><span class="sig-paren">(</span><em class="sig-param">subgame</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.winning_move" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ttttg.</code><code class="descname">winning_move</code><span class="sig-paren">(</span><em>subgame</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.winning_move" title="Permalink to this definition">¶</a></dt>
 <dd><p>given an option of a game, determine the winning move
 using nim equivalence. Subgames are tuples of sub-ttttg</p>
 </dd></dl>
@@ -121,11 +123,13 @@ using nim equivalence. Subgames are tuples of sub-ttttg</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -146,7 +150,7 @@ using nim equivalence. Subgames are tuples of sub-ttttg</p>
       &copy;2019, Thomas Vandeven.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

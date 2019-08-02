@@ -2,6 +2,6 @@ SymmetryGroup module
 ====================
 
 .. automodule:: SymmetryGroup
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,9 +1,11 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Board module &#8212; Finite Games Solver  documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -37,52 +39,50 @@
 Intended for use in games.</p>
 <dl class="class">
 <dt id="Board.Board">
-<em class="property">class </em><code class="sig-prename descclassname">Board.</code><code class="sig-name descname">Board</code><span class="sig-paren">(</span><em class="sig-param">m</em>, <em class="sig-param">n</em>, <em class="sig-param">tiles=()</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#Board.Board" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A hashable board class.</p>
+<em class="property">class </em><code class="descclassname">Board.</code><code class="descname">Board</code><span class="sig-paren">(</span><em>m</em>, <em>n</em>, <em>tiles=()</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#Board.Board" title="Permalink to this definition">¶</a></dt>
+<dd><p>A hashable board class.</p>
 <dl class="class">
 <dt id="Board.Board.Tile">
-<em class="property">class </em><code class="sig-name descname">Tile</code><a class="headerlink" href="#Board.Board.Tile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
+<em class="property">class </em><code class="descname">Tile</code><a class="headerlink" href="#Board.Board.Tile" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
 <dt id="Board.Board.Tile.empty">
-<code class="sig-name descname">empty</code><em class="property"> = '.'</em><a class="headerlink" href="#Board.Board.Tile.empty" title="Permalink to this definition">¶</a></dt>
+<code class="descname">empty</code><em class="property"> = '.'</em><a class="headerlink" href="#Board.Board.Tile.empty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="method">
 <dt id="Board.Board.get">
-<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#Board.Board.get" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#Board.Board.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns the element in self.__tiles if the position is valid.
 otherwise returns None</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="Board.Board.m">
-<em class="property">property </em><code class="sig-name descname">m</code><a class="headerlink" href="#Board.Board.m" title="Permalink to this definition">¶</a></dt>
+<code class="descname">m</code><a class="headerlink" href="#Board.Board.m" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="Board.Board.n">
-<em class="property">property </em><code class="sig-name descname">n</code><a class="headerlink" href="#Board.Board.n" title="Permalink to this definition">¶</a></dt>
+<code class="descname">n</code><a class="headerlink" href="#Board.Board.n" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="Board.Board.row">
-<code class="sig-name descname">row</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#Board.Board.row" title="Permalink to this definition">¶</a></dt>
+<code class="descname">row</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#Board.Board.row" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns a row in the board indexed 0 to m-1</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="Board.Board.rows">
-<code class="sig-name descname">rows</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Board.Board.rows" title="Permalink to this definition">¶</a></dt>
+<code class="descname">rows</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Board.Board.rows" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns a generator expression for the rows</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="Board.Board.tiles">
-<em class="property">property </em><code class="sig-name descname">tiles</code><a class="headerlink" href="#Board.Board.tiles" title="Permalink to this definition">¶</a></dt>
+<code class="descname">tiles</code><a class="headerlink" href="#Board.Board.tiles" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -119,11 +119,13 @@ otherwise returns None</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
+  <h3>Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -144,7 +146,7 @@ otherwise returns None</p>
       &copy;2019, Thomas Vandeven.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
