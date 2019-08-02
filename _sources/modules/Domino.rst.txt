@@ -1,0 +1,7 @@
+Domino module
+=============
+
+.. automodule:: Domino
+   :members:
+   :undoc-members:
+   :show-inheritance:

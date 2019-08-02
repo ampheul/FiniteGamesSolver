@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>ttttg module &#8212; Finite Games Solver  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ttttg">
+<span id="ttttg-module"></span><h1>ttttg module<a class="headerlink" href="#module-ttttg" title="Permalink to this headline">¶</a></h1>
+<p>The tic tac toe type game (TTTTG) is played on a 1xn board.
+players take turns placing (x)s on the board. The first player to
+get 3 in a row wins.</p>
+<p>it is obvious that if you play within two adjacent squares of another x
+that you will lose the game. The other player will play the third
+x and get 3 in a row. Thus we can ignore all losing moves like this.</p>
+<p>It should be easy to see that for any game adding or removing losing options
+does not change the value of the game. Hence it can be shown inductively that
+a TTTTG of 1xn is equivalent to the normal play game of n sticks in a line where
+players take turns removing a stick its two left and two right neighbors
+(if they exist).</p>
+<p>The nim equivalency of this game is calculated below, and hence we can
+determine the value of TTTTG_100. Proof by algorithm. Whoopee.</p>
+<p>Takes a command line argument n, which is the highest value of ttttg_n to
+computer nim equivalency for.</p>
+<dl class="function">
+<dt id="ttttg.mex">
+<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">mex</code><span class="sig-paren">(</span><em class="sig-param">nim_value_set</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.mex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the minimal excludant from a set of nim values</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ttttg.nim">
+<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">nim</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.nim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the nim value for ttttg_n
+ttttg_values is the array of nim values for games of 1xn
+where n is the index where the value is stored</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ttttg.nim_options">
+<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">nim_options</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.nim_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate all the options for ttttg_n in terms of nim equivalence
+return them as a set</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ttttg.nim_sum">
+<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">nim_sum</code><span class="sig-paren">(</span><em class="sig-param">nim_values_iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.nim_sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>takes an iterable of nim values and returns the xor of all the elements</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ttttg.options">
+<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">options</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a set of tuples.
+each tuple sums to a subgame of ttttg_n
+each element of a tuple is an integer i which represents ttttg_i</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ttttg.winning_move">
+<code class="sig-prename descclassname">ttttg.</code><code class="sig-name descname">winning_move</code><span class="sig-paren">(</span><em class="sig-param">subgame</em><span class="sig-paren">)</span><a class="headerlink" href="#ttttg.winning_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>given an option of a game, determine the winning move
+using nim equivalence. Subgames are tuples of sub-ttttg</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Finite Games Solver</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Readme.html">Finite Games Solver</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Thomas Vandeven.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/modules/ttttg.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

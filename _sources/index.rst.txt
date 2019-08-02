@@ -7,7 +7,7 @@ Welcome to Finite Games Solver's documentation!
    :caption: Contents:
 
    Readme
-
+   modules/module
 
 
 Indices and tables

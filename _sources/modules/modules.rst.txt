@@ -1,0 +1,17 @@
+source
+======
+
+.. toctree::
+   :maxdepth: 4
+
+   Board
+   Board2
+   Domino
+   Game
+   Node
+   Permutation
+   Symmetry
+   SymmetryGroup
+   domino
+   knight
+   ttttg

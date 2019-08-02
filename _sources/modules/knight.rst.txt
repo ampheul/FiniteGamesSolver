@@ -1,0 +1,7 @@
+knight module
+=============
+
+.. automodule:: knight
+   :members:
+   :undoc-members:
+   :show-inheritance:
