@@ -1,11 +1,15 @@
 from enum import Enum
-from typing import Type, TypeVar, Generator, Iterable, Dict, List
+from typing import Type, Tuple, TypeVar, Generator, Iterable, Dict, List
 from typing_extensions import Protocol
+
+import operator
+import functools
 
 
 class Player(Enum):
     one = 1
     two = 2
+
 T = TypeVar('T')
 
 class Game(Protocol):
@@ -34,24 +38,44 @@ class Nim(NormalPlay):
     ===
     The type of game that has a nim equivalence.
     '''
-    def nim_value(self) -> int:
-        ...
-mex(values : Iterable[int]) -> int:
+    pass
 
+def mex(values : Iterable[int]) -> int:
+    '''
+    mex
+    ===
+    Provides the minimal excluded value in a list of non-negative integers.
+
+    Parameters
+    ----------
+    values : Iterable[int]
+
+    Returns
+    -------
+    int
+        returns the minimal excluded integer among values.
+
+    '''
     unique_values = sorted(set(values))
 
-    for i, value in enumerate(unique_values):
-        if value != i:
-            return i
-    return len(unique_values)
-        
+    if len(unique_values) == 0:
+        return 0
 
+    def binary_search(start: int, end: int) -> int:
+        if start >= end:
+            return start
+        
+        middle = ( start + end ) // 2
+        
+        if unique_values[middle] <= middle:
+            return binary_search(middle, end)
+        else:
+            return binary_search(start, middle)
+    
+    return 1 + binary_search(0, len(unique_values))
 
 
 nim_sum = functools.partial(functools.reduce, operator.xor)
-
-determine_nim(game : Nim):
-
 
 toggle = {
     Player.one : Player.two,
@@ -74,6 +98,10 @@ def zermelo(game : NormalPlay, player : Player) -> Player:
     player : Player
         The player who plays first.
     
+    Returns
+    -------
+    Player
+        returns the player who has a winning strategy.
     '''
     for option in game.options():
 

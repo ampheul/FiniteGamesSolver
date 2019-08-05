@@ -1,43 +1,16 @@
-from Board import *
-
-
-class Dominoes(GameBoard):
-
-    '''This is a board to be played with abstract games
-    '''
-    def __init__(self, *arr, **kwargs):
-
-        super().__init__(self, *arr, **kwargs)
-
-        if self.parent is not None:
-
-
-    def options():
-        ''' iterate over the options for the game
-        '''
-        # set generator for the set of filled tiles
-
-        for i in range(self.m):
-
-            for j in range(self.n):
-
-                if (i,j) not in self.plays and
-
-
 class Node:
-
-    def __init__(self, parent = None, game = None, **kwargs):
+    def __init__(self, parent = None, game = None):
 
         self.parent = parent
         self.game = game
 
-        try:
+        if not parent is None:
 
             m, n = parent.board.m, parent.board.n
-            self.board = Board(board= parent.board)
+            self.board = Board.copyBoard(parent.board)
             self.player = 2 if parent.player ==  1 else 1
 
-        except AttributeError:
+        else:
 
             m, n = game.m, game.n
             self.board = Board(m, n)
@@ -65,6 +38,7 @@ class Node:
                     self.children.append(child)
                     child.populate()
                     child = Node(self, self.game)
+
 
                 if child.board.playDomino((i, j), (i, j+1), domino):
 
